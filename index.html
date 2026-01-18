@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>My Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 40px;
+      background: #020617;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      opacity: 0.85;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 24px;
+      background: #3b82f6;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      background: #2563eb;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello world 👋</h1>
-  <p>My site is live on Cloudflare Pages.</p>
+  <div class="container">
+    <h1>🚀 It works!</h1>
+    <p>Your site is live on Cloudflare Pages.</p>
+    <p>Edit <code>index.html</code> on GitHub to update this page.</p>
+    <a href="https://cloudflare.com" target="_blank">Powered by Cloudflare</a>
+  </div>
 </body>
 </html>
