@@ -7,15 +7,12 @@
 
   <style>
     /* --- RESET & BASIC SETUP --- */
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #0f172a; /* Dark Slate Background */
-      color: #e5e7eb;      /* Light Text */
+      background: #0f172a;
+      color: #e5e7eb;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -33,244 +30,308 @@
       top: 0;
       z-index: 100;
     }
-
-    .nav-logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #3b82f6;
-    }
-
+    .nav-logo { font-size: 1.5rem; font-weight: bold; color: #3b82f6; cursor: pointer; }
     .nav-links a {
       margin-left: 20px;
       color: #e5e7eb;
       text-decoration: none;
       font-size: 0.9rem;
+      cursor: pointer;
     }
+    .nav-links a:hover, .active-link { color: #3b82f6 !important; }
 
-    .nav-links a:hover {
-      color: #3b82f6;
-    }
+    /* --- LAYOUT UTILS --- */
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; width: 100%; }
+    .hidden { display: none !important; }
 
-    /* --- HERO SECTION (Original Content) --- */
+    /* --- HERO SECTION --- */
     .hero {
       text-align: center;
       padding: 60px 20px;
       background: linear-gradient(to bottom, #020617, #0f172a);
     }
+    .hero h1 { font-size: 2.5rem; margin-bottom: 10px; color: #fff; }
+    .hero p { opacity: 0.85; max-width: 600px; margin: 0 auto; }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      opacity: 0.85;
-      max-width: 600px;
-      margin: 0 auto 20px auto;
-    }
-
-    /* --- PRODUCT GRID CONTAINER --- */
-    .main-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      width: 100%;
-    }
-
+    /* --- PRODUCT GRID --- */
     .section-title {
       font-size: 1.5rem;
       margin-bottom: 20px;
       border-left: 5px solid #3b82f6;
       padding-left: 15px;
     }
-
-    /* Grid Layout for Products */
     .product-grid {
       display: grid;
-      /* This creates a responsive grid that fits as many columns as possible */
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 25px;
     }
-
-    /* --- PRODUCT CARD STYLES --- */
     .product-card {
-      background: #1e293b; /* Slightly lighter than body */
+      background: #1e293b;
       border: 1px solid #334155;
       border-radius: 12px;
       padding: 20px;
-      transition: transform 0.2s, box-shadow 0.2s;
       display: flex;
       flex-direction: column;
+      transition: transform 0.2s;
     }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      border-color: #3b82f6;
-    }
-
+    .product-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
     .product-image {
-      width: 100%;
-      height: 180px;
-      background-color: #334155; /* Placeholder color */
+      height: 150px;
+      background: #334155;
       border-radius: 8px;
       margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       color: #94a3b8;
-      font-size: 0.9rem;
     }
-
-    .product-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin: 0 0 10px 0;
-      color: #fff;
+    .product-title { font-weight: bold; margin: 0 0 5px 0; color: #fff; }
+    .product-desc { font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px; flex-grow: 1; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+    .price { font-size: 1.1rem; font-weight: bold; color: #fff; }
+    
+    .buy-btn {
+      background: #3b82f6; color: white; border: none;
+      padding: 8px 16px; border-radius: 6px; cursor: pointer;
+      font-weight: bold; transition: 0.2s;
     }
+    .buy-btn:hover { background: #2563eb; }
+    .buy-btn:active { transform: scale(0.95); }
 
-    .product-desc {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      margin-bottom: 15px;
-      flex-grow: 1; /* Pushes button to bottom */
-      line-height: 1.4;
+    /* --- CART PAGE STYLES --- */
+    .cart-container {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: 0 auto;
     }
-
-    .price-row {
+    .cart-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-top: auto;
+      padding: 15px 0;
+      border-bottom: 1px solid #334155;
     }
-
-    .price {
-      font-size: 1.25rem;
-      color: #fff;
+    .cart-total {
+      text-align: right;
+      font-size: 1.5rem;
       font-weight: bold;
+      margin-top: 20px;
+      padding-top: 20px;
     }
+    .empty-msg { text-align: center; color: #94a3b8; font-style: italic; }
 
-    .buy-btn {
-      background: #3b82f6;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-
-    .buy-btn:hover {
-      background: #2563eb;
-    }
-
-    /* --- FOOTER --- */
-    footer {
+    /* --- PAYMENT BUTTONS --- */
+    .payment-methods {
+      margin-top: 30px;
+      border-top: 1px solid #334155;
+      padding-top: 20px;
       text-align: center;
-      padding: 40px;
-      margin-top: auto;
-      border-top: 1px solid #1e293b;
-      font-size: 0.9rem;
-      color: #64748b;
+    }
+    .pay-btn {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      margin: 10px auto;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    .pay-btn:hover { opacity: 0.9; }
+
+    /* PayPal Style (Gold) */
+    .btn-paypal {
+      background: #FFC439;
+      color: #003087;
+      font-style: italic;
+    }
+    
+    /* Apple Pay Style (Black) */
+    .btn-apple {
+      background: #000000;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    footer a {
-      color: #3b82f6;
-      text-decoration: none;
+    /* Footer */
+    footer {
+      text-align: center; padding: 40px; margin-top: auto;
+      border-top: 1px solid #1e293b; color: #64748b;
     }
+    footer a { color: #3b82f6; text-decoration: none; }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="nav-logo">🚀 KobyStore</div>
+    <div class="nav-logo" onclick="showShop()">🚀 KobyStore</div>
     <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Deals</a>
-      <a href="#">Cart (0)</a>
+      <a onclick="showShop()" id="link-shop" class="active-link">Shop</a>
+      <a onclick="showCart()" id="link-cart">Cart (<span id="cart-count">0</span>)</a>
     </div>
   </nav>
 
-  <section class="hero">
-    <h1>🚀 Koby is weird!</h1>
-    <p>Welcome to the official Koby store. Your site is live on Cloudflare Pages. Browse our weird collection below.</p>
-  </section>
+  <div id="shop-view">
+    <section class="hero">
+      <h1>🚀 Koby is weird!</h1>
+      <p>Welcome to the official Koby store. Add items to your cart and check out below.</p>
+    </section>
 
-  <div class="main-content">
-    <h2 class="section-title">Best Sellers</h2>
-
-    <div class="product-grid">
-
-      <div class="product-card">
-        <div class="product-image">Image Placeholder</div>
-        <h3 class="product-title">Super Fast Rocket</h3>
-        <p class="product-desc">Go to the moon and back with this reliable starter rocket.</p>
-        <div class="price-row">
-          <span class="price">$499.99</span>
-          <button class="buy-btn">Add to Cart</button>
+    <div class="container">
+      <h2 class="section-title">Latest Drops</h2>
+      <div class="product-grid">
+        
+        <div class="product-card">
+          <div class="product-image">🚀</div>
+          <h3 class="product-title">Super Fast Rocket</h3>
+          <p class="product-desc">Moon travel ready. Helmet sold separately.</p>
+          <div class="price-row">
+            <span class="price">$499.99</span>
+            <button class="buy-btn" onclick="addToCart('Super Fast Rocket', 499.99)">Add to Cart</button>
+          </div>
         </div>
+
+        <div class="product-card">
+          <div class="product-image">🧥</div>
+          <h3 class="product-title">Invisible Cloak</h3>
+          <p class="product-desc">You can't see it, but it's very soft.</p>
+          <div class="price-row">
+            <span class="price">$29.50</span>
+            <button class="buy-btn" onclick="addToCart('Invisible Cloak', 29.50)">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">⌨️</div>
+          <h3 class="product-title">Coding Keyboard</h3>
+          <p class="product-desc">Makes a cool clicky sound. +10 hacking skill.</p>
+          <div class="price-row">
+            <span class="price">$120.00</span>
+            <button class="buy-btn" onclick="addToCart('Coding Keyboard', 120.00)">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">☕</div>
+          <h3 class="product-title">Infinite Coffee</h3>
+          <p class="product-desc">Physics-defying liquid energy.</p>
+          <div class="price-row">
+            <span class="price">$99.99</span>
+            <button class="buy-btn" onclick="addToCart('Infinite Coffee', 99.99)">Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="cart-view" class="container hidden">
+    <h2 class="section-title">Your Cart</h2>
+    
+    <div class="cart-container">
+      <div id="cart-items-list">
+        <p class="empty-msg">Your cart is empty. Go buy some weird stuff!</p>
       </div>
 
-      <div class="product-card">
-        <div class="product-image">Image Placeholder</div>
-        <h3 class="product-title">Invisible Cloak</h3>
-        <p class="product-desc">Perfect for sneaking around. Batteries not included.</p>
-        <div class="price-row">
-          <span class="price">$29.50</span>
-          <button class="buy-btn">Add to Cart</button>
-        </div>
+      <div class="cart-total">
+        Total: $<span id="cart-total-display">0.00</span>
       </div>
 
-      <div class="product-card">
-        <div class="product-image">Image Placeholder</div>
-        <h3 class="product-title">Mystery Box</h3>
-        <p class="product-desc">We don't know what's inside, and neither do you!</p>
-        <div class="price-row">
-          <span class="price">$15.00</span>
-          <button class="buy-btn">Add to Cart</button>
-        </div>
+      <div class="payment-methods" id="payment-buttons">
+        <p style="margin-bottom: 15px; color:#94a3b8;">Secure Checkout</p>
+        
+        <button class="pay-btn btn-apple" onclick="alert('Starting Apple Pay...')">
+            Pay
+        </button>
+        
+        <button class="pay-btn btn-paypal" onclick="alert('Redirecting to PayPal...')">
+          <span style="font-weight:bold;">Pay</span>Pal
+        </button>
       </div>
-
-      <div class="product-card">
-        <div class="product-image">Image Placeholder</div>
-        <h3 class="product-title">Coding Keyboard</h3>
-        <p class="product-desc">Mechanical switches that make you type 200% faster.</p>
-        <div class="price-row">
-          <span class="price">$120.00</span>
-          <button class="buy-btn">Add to Cart</button>
-        </div>
-      </div>
-
-       <div class="product-card">
-        <div class="product-image">Image Placeholder</div>
-        <h3 class="product-title">Infinite Coffee</h3>
-        <p class="product-desc">A mug that never runs empty. Physics hates it.</p>
-        <div class="price-row">
-          <span class="price">$99.99</span>
-          <button class="buy-btn">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-image">Image Placeholder</div>
-        <h3 class="product-title">Cloudflare Hoodie</h3>
-        <p class="product-desc">Stay warm while deploying to the edge.</p>
-        <div class="price-row">
-          <span class="price">$45.00</span>
-          <button class="buy-btn">Add to Cart</button>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <footer>
     <p>Powered by <a href="https://cloudflare.com" target="_blank">Cloudflare</a></p>
-    <p>&copy; 2024 Koby Inc. All weird rights reserved.</p>
+    <p>&copy; 2024 Koby Inc.</p>
   </footer>
 
+  <script>
+    // 1. Data State
+    let cart = [];
+    
+    // 2. Add to Cart Function
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCartCount();
+      alert(name + " added to cart!");
+    }
+
+    // 3. Update the Nav Counter
+    function updateCartCount() {
+      document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    // 4. Show Shop View
+    function showShop() {
+      document.getElementById('shop-view').classList.remove('hidden');
+      document.getElementById('cart-view').classList.add('hidden');
+      
+      // Update styling for nav links
+      document.getElementById('link-shop').classList.add('active-link');
+      document.getElementById('link-cart').classList.remove('active-link');
+    }
+
+    // 5. Show Cart View (and Render Items)
+    function showCart() {
+      document.getElementById('shop-view').classList.add('hidden');
+      document.getElementById('cart-view').classList.remove('hidden');
+
+      // Update styling for nav links
+      document.getElementById('link-shop').classList.remove('active-link');
+      document.getElementById('link-cart').classList.add('active-link');
+
+      renderCartItems();
+    }
+
+    // 6. Render the List inside the Cart
+    function renderCartItems() {
+      const listContainer = document.getElementById('cart-items-list');
+      const totalDisplay = document.getElementById('cart-total-display');
+      const payButtons = document.getElementById('payment-buttons');
+
+      // Clear current list
+      listContainer.innerHTML = '';
+
+      if (cart.length === 0) {
+        listContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+        totalDisplay.innerText = '0.00';
+        payButtons.classList.add('hidden'); // Hide buttons if empty
+        return;
+      }
+
+      // Show buttons if items exist
+      payButtons.classList.remove('hidden');
+
+      let total = 0;
+
+      // Loop through cart array and create HTML
+      cart.forEach((item, index) => {
+        total += item.price;
+        
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = `
+          <span>${item.name}</span>
+          <span>$${item.price.toFixed(2)}</span>
+        `;
+        listContainer.appendChild(itemDiv);
+      });
+
+      totalDisplay.innerText = total.toFixed(2);
+    }
+  </script>
 </body>
 </html>
